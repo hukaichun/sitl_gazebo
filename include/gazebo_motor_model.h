@@ -138,6 +138,9 @@ class GazeboMotorModel : public MotorModel, public ModelPlugin {
   transport::SubscriberPtr command_sub_;
   transport::SubscriberPtr motor_failure_sub_; /*!< Subscribing to motor_failure_sub_topic_; receiving motor number to fail, as an integer */
 
+  transport::PublisherPtr motor_command_pub_;
+
+
   physics::ModelPtr model_;
   physics::JointPtr joint_;
   common::PID pid_;
@@ -149,6 +152,7 @@ class GazeboMotorModel : public MotorModel, public ModelPlugin {
   boost::thread callback_queue_thread_;
   void QueueThread();
   std_msgs::msgs::Float turning_velocity_msg_;
+  msgs::Vector2d motor_command_msg_;
   void VelocityCallback(CommandMotorSpeedPtr &rot_velocities);
   void MotorFailureCallback(const boost::shared_ptr<const msgs::Int> &fail_msg);  /*!< Callback for the motor_failure_sub_ subscriber */
   std::unique_ptr<FirstOrderFilter<double>>  rotor_velocity_filter_;

@@ -34,6 +34,7 @@ void GazeboMotorModel::InitializeParams() {}
 void GazeboMotorModel::Publish() {
   turning_velocity_msg_.set_data(joint_->GetVelocity(0));
   motor_velocity_pub_->Publish(turning_velocity_msg_);
+  motor_command_pub_->Publish(motor_command_msg_);
 }
 
 void GazeboMotorModel::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
@@ -148,6 +149,7 @@ void GazeboMotorModel::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   //std::cout << "[gazebo_motor_model]: Subscribe to gz topic: "<< motor_failure_sub_topic_ << std::endl;
   motor_failure_sub_ = node_handle_->Subscribe<msgs::Int>(motor_failure_sub_topic_, &GazeboMotorModel::MotorFailureCallback, this);
   motor_velocity_pub_ = node_handle_->Advertise<std_msgs::msgs::Float>("~/" + model_->GetName() + motor_speed_pub_topic_, 1);
+  motor_command_pub_ = node_handle_->Advertise<msgs::Vector2d>("~/"+model_->GetName() + "/" + _sdf->GetElement("motorNumber")->Get<std::string>());
 
   // Create the first order filter.
   rotor_velocity_filter_.reset(new FirstOrderFilter<double>(time_constant_up_, time_constant_down_, ref_motor_rot_vel_));
@@ -242,6 +244,10 @@ void GazeboMotorModel::UpdateForcesAndMoments() {
   // Apply the filter on the motor's velocity.
   double ref_motor_rot_vel;
   ref_motor_rot_vel = rotor_velocity_filter_->updateFilter(ref_motor_rot_vel_, sampling_time_);
+
+  motor_command_msg_.set_x(real_motor_velocity);
+  motor_command_msg_.set_y(ref_motor_rot_vel_);
+
 
 #if 0 //FIXME: disable PID for now, it does not play nice with the PX4 CI system.
   if (use_pid_)

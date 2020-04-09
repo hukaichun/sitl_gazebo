@@ -464,7 +464,7 @@
           <input_offset>0</input_offset>
           <input_scaling>1200</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
+          <zero_position_armed>0</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
         </channel>
         <channel name='rotor2'>
@@ -472,7 +472,7 @@
           <input_offset>0</input_offset>
           <input_scaling>1200</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
+          <zero_position_armed>0</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
         </channel>
         <channel name='rotor3'>
@@ -480,7 +480,7 @@
           <input_offset>0</input_offset>
           <input_scaling>1200</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
+          <zero_position_armed>0</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
         </channel>
         <channel name='rotor4'>
@@ -488,7 +488,7 @@
           <input_offset>0</input_offset>
           <input_scaling>1200</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>100</zero_position_armed>
+          <zero_position_armed>0</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
         </channel>
       </control_channels>
